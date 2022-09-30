@@ -1,0 +1,75 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+	<h1 class="display-4">Users and Addresses</h1>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				User Name
+			</th>
+			<th>
+				Year of Birth
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.Users is not null && Model.Users.Any())
+			@foreach (var item in Model.Users)
+			{
+				<tr>
+					<td data-id="td-UserName">
+						@Html.DisplayFor(modelItem => item.UserName)
+					</td>
+					<td data-id="td-YearOfBirth">
+						@Html.DisplayFor(modelItem => item.YearOfBirth)
+					</td>
+				</tr>
+			}
+	</tbody>
+</table>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Street Address
+			</th>
+			<th>
+				City
+			</th>
+			<th>
+				State
+			</th>
+			<th>
+				Zip Code
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.Adresses is not null && Model.Adresses.Any())
+			@foreach (var item in Model.Adresses)
+			{
+				<tr>
+					<td data-id="td-StreetAddress">
+						@Html.DisplayFor(modelItem => item.StreetAddress)
+					</td>
+					<td data-id="td-City">
+						@Html.DisplayFor(modelItem => item.City)
+					</td>
+					<td data-id="td-State">
+						@Html.DisplayFor(modelItem => item.State)
+					</td>
+					<td data-id="td-ZipCode">
+						@Html.DisplayFor(modelItem => item.ZipCode)
+					</td>
+				</tr>
+			}
+	</tbody>
+</table>
