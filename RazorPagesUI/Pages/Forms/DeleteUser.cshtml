@@ -1,0 +1,15 @@
+﻿@page "{userName}"
+@model RazorPagesUI.Pages.Forms.DeleteUserModel
+@{
+	ViewData["Title"] = "Delete User";
+}
+
+<h1>User delete confirmation</h1>
+ 
+<div class="alert alert-danger">
+	<h5>Are you sure you want to delete '@Model.User.UserName' user</h5>
+	<form method="post">
+		<button type="submit" class="btn btn-danger" data-id="button-Yes">Yes</button>
+		<a class="btn btn-primary" asp-page="/Index" data-id="button-No">No</a>
+	</form>
+</div>

@@ -17,6 +17,8 @@
 			<th>
 				Year of Birth
 			</th>
+			<th>
+			</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +31,9 @@
 					</td>
 					<td data-id="td-YearOfBirth">
 						@Html.DisplayFor(modelItem => item.YearOfBirth)
+					</td>
+					<td>
+						<a asp-page="/Forms/DeleteUser" class="btn btn-danger m-1" asp-route-userName="@item.UserName" data-id="button-Delete">Delete</a>
 					</td>
 				</tr>
 			}
