@@ -7,7 +7,7 @@ namespace RazorPagesUI.Models
     {
         [BindProperty]
         [Required]
-        [MinLength(6), MaxLength(14)]
+        [MinLength(3), MaxLength(14)]
         public string UserName { get; set; }
 
         [BindProperty]
