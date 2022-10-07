@@ -6,9 +6,24 @@
 
 <h1>Add Address</h1>
 <form method="post">
-	<input type="text" asp-for="Address.StreetAddress" placeholder="Street Address" data-id="input-StreetAddress" />
-	<input type="text" asp-for="Address.City" placeholder="City" data-id="input-City" />
-	<input type="text" asp-for="Address.State" placeholder="State" data-id="input-State" />
-	<input type="text" asp-for="Address.ZipCode" placeholder="Zip Code" data-id="input-ZipCode" />
-	<button type="submit" data-id="button-AddAddress">Add Address</button>
+	<div class="form-group .padding-xs">
+		<label for="inputStreetAddress">Street Address</label>
+		<input class="form-control" id="inputUserName" type="text" asp-for="Address.StreetAddress" placeholder="Street Address" data-id="input-StreetAddress" />
+	</div>
+	<div class="form-group .padding-xs">
+		<label for="inputCity">City</label>
+		<input class="form-control" id="inputCity" type="text" asp-for="Address.City" placeholder="City" data-id="input-City" />
+	</div>
+	<div class="form-group .padding-xs">
+		<label for="inputState">State</label>
+		<input class="form-control" id="inputState" type="text" asp-for="Address.State" placeholder="State" data-id="input-State" />
+	</div>
+	<div class="form-group .padding-xs">
+		<label for="inputZipCode">Zip Code</label>
+		<input class="form-control" id="inputZipCode" type="text" asp-for="Address.ZipCode" placeholder="Zip Code" data-id="input-ZipCode" />
+	</div>
+	<div class="alert alert-light.padding-xs">
+		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
+		<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>
+	</div>
 </form>
