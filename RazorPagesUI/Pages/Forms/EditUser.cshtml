@@ -1,0 +1,24 @@
+﻿@page "{id}"
+@model RazorPagesUI.Pages.Forms.EditUserModel
+@{
+	ViewData["Title"] = "Edit User";
+}
+
+<h1>Edit User</h1>
+
+<form method="post">
+	<div class="form-group .padding-xs">
+		<label for="inputUserName">New User Name</label>
+		<input class="form-control input-sm" asp-for="EditedUser.UserName" id="inputUserName" placeholder="User Name" data-id="input-UserName" value="@Model.User.UserName">
+	</div>
+	<div class="form-group .padding-xs .margin-xs">
+		<label for="inputYearOfBirth">New Year of Birth</label>
+		<input class="form-control input-sm" asp-for="EditedUser.YearOfBirth" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
+	</div>
+	<div class="alert alert-light.padding-xs">
+
+		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
+		<button type="submit" class="btn btn-primary" data-id="button-Update">Update</button>
+	</div>
+</form>
+

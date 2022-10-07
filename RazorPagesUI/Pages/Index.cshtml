@@ -33,6 +33,7 @@
 						@Html.DisplayFor(modelItem => item.YearOfBirth)
 					</td>
 					<td>
+						<a asp-page="/Forms/EditUser" class="btn btn-primary m-1" asp-route-id="@item.Id" data-id="button-Edit">Edit</a>
 						<a asp-page="/Forms/DeleteUser" class="btn btn-danger m-1" asp-route-id="@item.Id" data-id="button-Delete">Delete</a>
 					</td>
 				</tr>

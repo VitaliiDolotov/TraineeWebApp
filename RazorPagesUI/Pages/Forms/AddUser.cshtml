@@ -5,10 +5,20 @@
 }
 
 <h1>Add User</h1>
+
 <form method="post">
-	<input type="text" asp-for="User.UserName" placeholder="User Name" data-id="input-UserName" />
-	<input type="text" asp-for="User.YearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" />
-	<button type="submit" data-id="button-AddUser">Add User</button>
+	<div class="form-group .padding-xs">
+		<label for="inputUserName">User Name</label>
+		<input class="form-control" id="inputUserName" type="text" asp-for="User.UserName" placeholder="User Name" data-id="input-UserName" />
+	</div>
+	<div class="form-group .padding-xs .margin-xs">
+		<label for="inputYearOfBirth">Year of Birth</label>
+		<input class="form-control" id="inputYearOfBirth"  asp-for="User.YearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" />
+	</div>
+	<div class="alert alert-light.padding-xs">
+		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
+		<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>
+	</div>
 </form>
 
 
