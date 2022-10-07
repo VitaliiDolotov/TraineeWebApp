@@ -5,6 +5,8 @@ namespace RazorPagesUI.Models
 {
     public class AddressModel
     {
+        public string Id { get; init; } = Guid.NewGuid().ToString();
+
         [BindProperty]
         [Required]
         [MinLength(8), MaxLength(30)]
@@ -26,6 +28,6 @@ namespace RazorPagesUI.Models
         [RegularExpression(@"(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)")]
         public string ZipCode { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; init; } = DateTime.UtcNow;
     }
 }

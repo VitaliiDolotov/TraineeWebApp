@@ -21,10 +21,10 @@ namespace RazorPagesUI.Pages.Forms
                 return Page();
             }
 
-            if (DataStorage.Addresses.Any(x => x.StreetAddress.Equals(Address.StreetAddress)) &&
-                DataStorage.Addresses.Any(x => x.City.Equals(Address.City)) &&
-                DataStorage.Addresses.Any(x => x.State.Equals(Address.State)) &&
-                DataStorage.Addresses.Any(x => x.ZipCode.Equals(Address.ZipCode)))
+            if (DataStorage.Addresses.Any(x => x.StreetAddress.Equals(Address.StreetAddress) &&
+            x.City.Equals(Address.City) &&
+            x.State.Equals(Address.State) &&
+            x.ZipCode.Equals(Address.ZipCode)))
             {
                 return Page();
             }

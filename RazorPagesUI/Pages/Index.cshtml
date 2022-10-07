@@ -55,6 +55,8 @@
 			<th>
 				Zip Code
 			</th>
+			<th>
+			</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -73,6 +75,9 @@
 					</td>
 					<td data-id="td-ZipCode">
 						@Html.DisplayFor(modelItem => item.ZipCode)
+					</td>
+					<td>
+						<a asp-page="/Forms/DeleteAddress" class="btn btn-danger m-1" asp-route-id="@item.Id" data-id="button-Delete">Delete</a>
 					</td>
 				</tr>
 			}
