@@ -17,8 +17,8 @@ namespace RazorPagesUI.Pages
 
         public void OnGet()
         {
-            DataStorage.Addresses.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-2));
-            DataStorage.Users.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-2));
+            DataStorage.Addresses.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
+            DataStorage.Users.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
 
             Adresses = DataStorage.Addresses;
             Users = DataStorage.Users;
