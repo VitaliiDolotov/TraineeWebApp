@@ -10,14 +10,14 @@ namespace RazorPagesUI.Pages.Forms
         [BindProperty]
         public UserModel User { get; set; }
 
-        public IActionResult OnGet(string userName)
+        public IActionResult OnGet(string id)
         {
-            if (!DataStorage.Users.Any(x => x.UserName.Equals(userName)))
+            if (!DataStorage.Users.Any(x => x.Id.Equals(id)))
             {
                 return RedirectToPage("/Index");
             }
 
-            User = DataStorage.Users.First(x => x.UserName.Equals(userName));
+            User = DataStorage.Users.First(x => x.Id.Equals(id));
 
             return Page();
 
@@ -29,7 +29,7 @@ namespace RazorPagesUI.Pages.Forms
             {
                 DataStorage
                     .Users
-                    .RemoveAll(x => x.UserName.Equals(User.UserName));
+                    .RemoveAll(x => x.Id.Equals(User.Id));
             }
             catch { }
 

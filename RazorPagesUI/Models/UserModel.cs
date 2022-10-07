@@ -5,6 +5,8 @@ namespace RazorPagesUI.Models
 {
     public class UserModel
     {
+        public string Id { get; init; } = Guid.NewGuid().ToString();
+
         [BindProperty]
         [Required]
         [MinLength(3), MaxLength(14)]
@@ -15,6 +17,6 @@ namespace RazorPagesUI.Models
         [Range(1900, 2004)]
         public int YearOfBirth { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; init; } = DateTime.UtcNow;
     }
 }
