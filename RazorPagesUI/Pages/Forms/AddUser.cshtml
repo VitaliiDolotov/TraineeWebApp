@@ -13,8 +13,8 @@
 	</div>
 	<div class="form-group .padding-xs .margin-xs">
 		<label for="inputYearOfBirth">Year of Birth</label>
-		<input class="form-control" id="inputYearOfBirth"  asp-for="User.YearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" />
-	</div>
+		<input class="form-control" id="inputYearOfBirth" aria-describedby="yearOfBirthHelp" asp-for="User.YearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" />
+		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
 	<div class="alert alert-light.padding-xs">
 		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
 		<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>

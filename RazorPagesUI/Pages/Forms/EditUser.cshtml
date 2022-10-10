@@ -13,7 +13,8 @@
 	</div>
 	<div class="form-group .padding-xs .margin-xs">
 		<label for="inputYearOfBirth">New Year of Birth</label>
-		<input class="form-control input-sm" asp-for="EditedUser.YearOfBirth" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
+		<input class="form-control input-sm" asp-for="EditedUser.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
+		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
 	</div>
 	<div class="alert alert-light.padding-xs">
 

@@ -20,7 +20,8 @@
 	</div>
 	<div class="form-group .padding-xs">
 		<label for="inputZipCode">Zip Code</label>
-		<input class="form-control" id="inputZipCode" type="text" asp-for="Address.ZipCode" placeholder="Zip Code" data-id="input-ZipCode" />
+		<input class="form-control" id="inputZipCode" aria-describedby="zipCodeHelp" type="text" asp-for="Address.ZipCode" placeholder="Zip Code" data-id="input-ZipCode" />
+		<small id="zipCodeHelp" class="form-text text-muted">US based Zip code</small>
 	</div>
 	<div class="alert alert-light.padding-xs">
 		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
