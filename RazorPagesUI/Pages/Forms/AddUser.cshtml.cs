@@ -1,14 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesUI.Models;
-using RazorPagesUI.SharedData;
+using RazorPageDemo.Services;
+using RazorPagesDemo.Models;
 
 namespace RazorPagesUI.Pages.Forms
 {
     public class AddUserModel : PageModel
     {
+        private readonly IDataRepository _dataRepository;
+
         [BindProperty]
-        public UserModel User { get; set; }
+        public User User { get; set; }
+
+        public AddUserModel(IDataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public void OnGet()
         {
@@ -21,13 +28,13 @@ namespace RazorPagesUI.Pages.Forms
                 return Page();
             }
 
-            if (DataStorage.Users.Any(x => x.UserName.Equals(User.UserName)) &&
-                DataStorage.Users.Any(x => x.YearOfBirth.Equals(User.YearOfBirth)))
+            if (_dataRepository.GetAllUsers().Any(x => x.Name.Equals(User.Name)) &&
+                _dataRepository.GetAllUsers().Any(x => x.YearOfBirth.Equals(User.YearOfBirth)))
             {
                 return Page();
             }
 
-            DataStorage.Users.Add(User);
+            _dataRepository.AddUser(User);
 
             return RedirectToPage("/Index");
         }

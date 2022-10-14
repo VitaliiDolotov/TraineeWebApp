@@ -1,14 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesUI.Models;
-using RazorPagesUI.SharedData;
+using RazorPageDemo.Services;
+using RazorPagesDemo.Models;
 
 namespace RazorPagesUI.Pages.Forms
 {
     public class AddAddressModel : PageModel
     {
+        private readonly IDataRepository _dataRepository;
+
         [BindProperty]
-        public AddressModel Address { get; set; }
+        public Address Address { get; set; }
+
+        public AddAddressModel(IDataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public void OnGet()
         {
@@ -21,7 +28,7 @@ namespace RazorPagesUI.Pages.Forms
                 return Page();
             }
 
-            if (DataStorage.Addresses.Any(x => x.StreetAddress.Equals(Address.StreetAddress) &&
+            if (_dataRepository.GetAllAddresses().Any(x => x.StreetAddress.Equals(Address.StreetAddress) &&
             x.City.Equals(Address.City) &&
             x.State.Equals(Address.State) &&
             x.ZipCode.Equals(Address.ZipCode)))
@@ -29,7 +36,7 @@ namespace RazorPagesUI.Pages.Forms
                 return Page();
             }
 
-            DataStorage.Addresses.Add(Address);
+            _dataRepository.AddAddress(Address);
 
             return RedirectToPage("/Index");
         }

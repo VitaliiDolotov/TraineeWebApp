@@ -1,4 +1,7 @@
+using RazorPageDemo.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton<IDataRepository, MockRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

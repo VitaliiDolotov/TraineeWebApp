@@ -7,13 +7,14 @@
 <h1>Edit User</h1>
 
 <form method="post">
+	<input hidden asp-for="User.Id" />
 	<div class="form-group .padding-xs">
 		<label for="inputUserName">New User Name</label>
-		<input class="form-control input-sm" asp-for="EditedUser.UserName" id="inputUserName" placeholder="User Name" data-id="input-UserName" value="@Model.User.UserName">
+		<input class="form-control input-sm" asp-for="User.Name" id="inputUserName" placeholder="User Name" data-id="input-UserName" value="@Model.User.Name">
 	</div>
 	<div class="form-group .padding-xs .margin-xs">
 		<label for="inputYearOfBirth">New Year of Birth</label>
-		<input class="form-control input-sm" asp-for="EditedUser.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
+		<input class="form-control input-sm" asp-for="User.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
 		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
 	</div>
 	<div class="alert alert-light.padding-xs">

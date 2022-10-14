@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RazorPagesUI.Models
+namespace RazorPagesDemo.Models
 {
-    public class UserModel
+    public class User
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
-        [BindProperty]
         [Required]
         [MinLength(3), MaxLength(14)]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
-        [BindProperty]
         [Required]
         [Range(1900, 2004)]
         public int YearOfBirth { get; set; }
