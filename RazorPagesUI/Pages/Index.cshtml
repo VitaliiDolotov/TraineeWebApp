@@ -40,7 +40,7 @@
 					<td data-id="td-YearOfBirth">
 						@Html.DisplayFor(modelItem => item.YearOfBirth)
 					</td>
-					<td>
+					<td style="text-align:right">
 						<a asp-page="/Forms/EditUser" class="btn btn-primary m-1" asp-route-id="@item.Id" data-id="button-Edit">Edit</a>
 						<a asp-page="/Forms/DeleteUser" class="btn btn-danger m-1" asp-route-id="@item.Id" data-id="button-Delete">Delete</a>
 					</td>
@@ -93,7 +93,7 @@
 					<td data-id="td-ZipCode">
 						@Html.DisplayFor(modelItem => item.ZipCode)
 					</td>
-					<td>
+					<td style="text-align:right">
 						<a asp-page="/Forms/DeleteAddress" class="btn btn-danger m-1" asp-route-id="@item.Id" data-id="button-Delete">Delete</a>
 					</td>
 				</tr>
