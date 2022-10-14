@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPageDemo.Services;
+using RazorPagesDemo.Models;
 using RazorPagesUI.Models;
 using RazorPagesUI.SharedData;
 
@@ -7,21 +9,22 @@ namespace RazorPagesUI.Pages
     public class IndexModel : PageModel
     {
         public List<AddressModel> Adresses { get; set; }
-        public List<UserModel> Users { get; set; }
-        private readonly ILogger<IndexModel> _logger;
+        public IEnumerable<User> Users { get; set; }
+        private readonly IDataRepository _dataRepository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IDataRepository dataRepository)
         {
-            _logger = logger;
+            _dataRepository = dataRepository;
         }
 
         public void OnGet()
         {
+            Users = _dataRepository.GetAllUsers();
             DataStorage.Addresses.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
-            DataStorage.Users.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
+            //DataStorage.Users.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
 
             Adresses = DataStorage.Addresses;
-            Users = DataStorage.Users;
+            //Users = DataStorage.Users;
         }
     }
 }

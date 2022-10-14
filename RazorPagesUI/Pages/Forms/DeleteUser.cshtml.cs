@@ -1,23 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesUI.Models;
-using RazorPagesUI.SharedData;
+using RazorPageDemo.Services;
+using RazorPagesDemo.Models;
 
 namespace RazorPagesUI.Pages.Forms
 {
     public class DeleteUserModel : PageModel
     {
+        private readonly IDataRepository _dataRepository;
+
         [BindProperty]
-        public UserModel User { get; set; }
+        public User User { get; set; }
+
+        public DeleteUserModel(IDataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public IActionResult OnGet(string id)
         {
-            if (!DataStorage.Users.Any(x => x.Id.Equals(id)))
+            User = _dataRepository.GetUser(id);
+
+            if (User is null)
             {
                 return RedirectToPage("/Index");
             }
-
-            User = DataStorage.Users.First(x => x.Id.Equals(id));
 
             return Page();
 
@@ -25,14 +32,7 @@ namespace RazorPagesUI.Pages.Forms
 
         public IActionResult OnPost()
         {
-            try
-            {
-                DataStorage
-                    .Users
-                    .RemoveAll(x => x.Id.Equals(User.Id));
-            }
-            catch { }
-
+            _dataRepository.DeleteUser(User);
 
             return RedirectToPage("/Index");
         }

@@ -1,43 +1,43 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesUI.Models;
-using RazorPagesUI.SharedData;
+using RazorPageDemo.Services;
+using RazorPagesDemo.Models;
 
 namespace RazorPagesUI.Pages.Forms
 {
     public class EditUserModel : PageModel
     {
-        [BindProperty]
-        public UserModel User { get; set; }
+        private readonly IDataRepository _dataRepository;
 
         [BindProperty]
-        public UserModel EditedUser { get; set; }
+        public User User { get; set; }
+
+        [BindProperty]
+        public User EditedUser { get; set; }
+
+        public EditUserModel(IDataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public IActionResult OnGet(string id)
         {
-            if (!DataStorage.Users.Any(x => x.Id.Equals(id)))
+            var user = _dataRepository.GetUser(id);
+
+            if (user is null)
             {
                 return RedirectToPage("/Index");
             }
 
-            User = DataStorage.Users.First(x => x.Id.Equals(id));
+            User = user;
 
             return Page();
 
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(User user)
         {
-            try
-            {
-                var user = DataStorage
-                    .Users
-                    .First(x => x.Id.Equals(User.Id));
-                user.UserName = EditedUser.UserName;
-                user.YearOfBirth = EditedUser.YearOfBirth;
-            }
-            catch { }
-
+            User = _dataRepository.EditUser(user);
 
             return RedirectToPage("/Index");
         }

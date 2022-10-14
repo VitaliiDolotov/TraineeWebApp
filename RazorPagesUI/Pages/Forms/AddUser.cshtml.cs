@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPagesDemo.Models;
 using RazorPagesUI.Models;
 using RazorPagesUI.SharedData;
 
@@ -8,7 +9,7 @@ namespace RazorPagesUI.Pages.Forms
     public class AddUserModel : PageModel
     {
         [BindProperty]
-        public UserModel User { get; set; }
+        public User User { get; set; }
 
         public void OnGet()
         {
@@ -21,13 +22,13 @@ namespace RazorPagesUI.Pages.Forms
                 return Page();
             }
 
-            if (DataStorage.Users.Any(x => x.UserName.Equals(User.UserName)) &&
-                DataStorage.Users.Any(x => x.YearOfBirth.Equals(User.YearOfBirth)))
-            {
-                return Page();
-            }
+            //if (DataStorage.Users.Any(x => x.UserName.Equals(User.UserName)) &&
+            //    DataStorage.Users.Any(x => x.YearOfBirth.Equals(User.YearOfBirth)))
+            //{
+            //    return Page();
+            //}
 
-            DataStorage.Users.Add(User);
+            //DataStorage.Users.Add(User);
 
             return RedirectToPage("/Index");
         }
