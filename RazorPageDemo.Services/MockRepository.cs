@@ -16,6 +16,11 @@ namespace RazorPageDemo.Services
             };
         }
 
+        public void AddUser(User user)
+        {
+            _usersList.Add(user);
+        }
+
         public void DeleteUser(User user)
         {
             var userToDelete = GetUser(user.Id);
