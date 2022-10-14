@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPageDemo.Services;
 using RazorPagesDemo.Models;
-using RazorPagesUI.Models;
-using RazorPagesUI.SharedData;
 
 namespace RazorPagesUI.Pages
 {
     public class IndexModel : PageModel
     {
-        public List<AddressModel> Adresses { get; set; }
+        public IEnumerable<Address> Adresses { get; set; }
         public IEnumerable<User> Users { get; set; }
         private readonly IDataRepository _dataRepository;
 
@@ -19,12 +17,24 @@ namespace RazorPagesUI.Pages
 
         public void OnGet()
         {
-            Users = _dataRepository.GetAllUsers();
-            DataStorage.Addresses.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
-            //DataStorage.Users.RemoveAll(x => x.Created <= DateTime.UtcNow.AddMinutes(-4));
+            foreach (var user in _dataRepository.GetAllUsers().ToList())
+            {
+                if (user.Created <= DateTime.UtcNow.AddMinutes(-4))
+                {
+                    _dataRepository.DeleteUser(user);
+                }
+            }
 
-            Adresses = DataStorage.Addresses;
-            //Users = DataStorage.Users;
+            foreach (var address in _dataRepository.GetAllAddresses().ToList())
+            {
+                if (address.Created <= DateTime.UtcNow.AddMinutes(-4))
+                {
+                    _dataRepository.DeleteAddress(address);
+                }
+            }
+
+            Users = _dataRepository.GetAllUsers();
+            Adresses = _dataRepository.GetAllAddresses();
         }
     }
 }

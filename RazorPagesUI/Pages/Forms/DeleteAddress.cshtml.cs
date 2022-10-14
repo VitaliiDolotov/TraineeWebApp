@@ -1,23 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesUI.Models;
-using RazorPagesUI.SharedData;
+using RazorPageDemo.Services;
+using RazorPagesDemo.Models;
 
 namespace RazorPagesUI.Pages.Forms
 {
     public class DeleteAddressModel : PageModel
     {
+        private readonly IDataRepository _dataRepository;
+
         [BindProperty]
-        public AddressModel Address { get; set; }
+        public Address Address { get; set; }
+
+        public DeleteAddressModel(IDataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public IActionResult OnGet(string id)
         {
-            if (!DataStorage.Addresses.Any(x => x.Id.Equals(id)))
+            Address = _dataRepository.GetAddress(id);
+
+            if (Address is null)
             {
                 return RedirectToPage("/Index");
             }
-
-            Address = DataStorage.Addresses.First(x => x.Id.Equals(id));
 
             return Page();
 
@@ -25,14 +32,7 @@ namespace RazorPagesUI.Pages.Forms
 
         public IActionResult OnPost()
         {
-            try
-            {
-                DataStorage
-                    .Addresses
-                    .RemoveAll(x => x.Id.Equals(Address.Id));
-            }
-            catch { }
-
+            _dataRepository.DeleteAddress(Address);
 
             return RedirectToPage("/Index");
         }

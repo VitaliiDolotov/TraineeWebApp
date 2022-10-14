@@ -9,5 +9,10 @@ namespace RazorPageDemo.Services
         User? GetUser(string id);
         User? EditUser(User user);
         void DeleteUser(User user);
+
+        IEnumerable<Address> GetAllAddresses();
+        void AddAddress(Address address);
+        Address? GetAddress(string id);
+        void DeleteAddress(Address address);
     }
 }

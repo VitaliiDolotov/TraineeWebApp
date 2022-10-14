@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPageDemo.Services;
 using RazorPagesDemo.Models;
-using RazorPagesUI.SharedData;
 
 namespace RazorPagesUI.Pages.Forms
 {
