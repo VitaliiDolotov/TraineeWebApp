@@ -11,9 +11,9 @@ namespace RazorPageDemo.Services
         {
             _usersList = new List<User>()
             {
-                new User() { Name = "Oleg", YearOfBirth = 1993, Created = DateTime.UtcNow },
-                new User() { Name = "Dasha", YearOfBirth = 1992, Created = DateTime.UtcNow },
-                new User() { Name = "Oksana", YearOfBirth = 1996, Created = DateTime.UtcNow }
+                new User() { Name = "Oleg", YearOfBirth = 1993, Created = DateTime.UtcNow, Gender = Gender.Male },
+                new User() { Name = "Dasha", YearOfBirth = 1992, Created = DateTime.UtcNow, Gender = Gender.Female },
+                new User() { Name = "Oksana", YearOfBirth = 1996, Created = DateTime.UtcNow, Gender = Gender.Female }
             };
 
             _addressesList = new List<Address>()
@@ -53,6 +53,7 @@ namespace RazorPageDemo.Services
             {
                 user.Name = updatedUser.Name;
                 user.YearOfBirth = updatedUser.YearOfBirth;
+                user.Gender = updatedUser.Gender;
             }
 
             return null;

@@ -16,6 +16,8 @@ namespace RazorPagesDemo.Models
         [Range(1900, 2004, ErrorMessage = "Not valid Year of Birth is set")]
         public int YearOfBirth { get; set; }
 
+        public Gender Gender { get; set; }
+
         public DateTime Created { get; init; } = DateTime.UtcNow;
     }
 }
