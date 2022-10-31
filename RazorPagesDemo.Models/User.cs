@@ -6,12 +6,14 @@ namespace RazorPagesDemo.Models
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
-        [Required]
-        [MinLength(3), MaxLength(14)]
+        [Display(Name = "User Name")]
+        [Required(ErrorMessage = "Name is requried")]
+        [MinLength(3, ErrorMessage = "Name is too short"), MaxLength(14, ErrorMessage = "Name is too long")]
         public string Name { get; set; }
 
-        [Required]
-        [Range(1900, 2004)]
+        [Display(Name = "Year of Birth")]
+        [Required(ErrorMessage = "Year of Birth is requried")]
+        [Range(1900, 2004, ErrorMessage = "Not valid Year of Birth is set")]
         public int YearOfBirth { get; set; }
 
         public DateTime Created { get; init; } = DateTime.UtcNow;

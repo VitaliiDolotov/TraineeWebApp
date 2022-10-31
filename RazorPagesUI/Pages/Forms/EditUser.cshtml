@@ -9,16 +9,16 @@
 <form method="post">
 	<input hidden asp-for="User.Id" />
 	<div class="form-group .padding-xs">
-		<label for="inputUserName">New User Name</label>
+		<label asp-for="User.Name" for="inputUserName"></label>
 		<input class="form-control input-sm" asp-for="User.Name" id="inputUserName" placeholder="User Name" data-id="input-UserName" value="@Model.User.Name">
 	</div>
+	<br />
 	<div class="form-group .padding-xs .margin-xs">
-		<label for="inputYearOfBirth">New Year of Birth</label>
+		<label asp-for="User.YearOfBirth" for="inputYearOfBirth"></label>
 		<input class="form-control input-sm" asp-for="User.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
 		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
 	</div>
 	<div class="alert alert-light.padding-xs">
-
 		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
 		<button type="submit" class="btn btn-primary" data-id="button-Update">Update</button>
 	</div>

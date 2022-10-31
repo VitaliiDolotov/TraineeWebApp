@@ -8,17 +8,25 @@
 
 <form method="post">
 	<div class="form-group .padding-xs">
-		<label for="inputUserName">User Name</label>
+		<label asp-for="User.Name" for="inputUserName"></label>
 		<input class="form-control" id="inputUserName" type="text" asp-for="User.Name" placeholder="User Name" data-id="input-UserName" />
+		<span asp-validation-for="User.Name" class="text-danger"></span>
 	</div>
+	<br />
 	<div class="form-group .padding-xs .margin-xs">
-		<label for="inputYearOfBirth">Year of Birth</label>
+		<label asp-for="User.YearOfBirth" for="inputYearOfBirth"></label>
 		<input class="form-control" id="inputYearOfBirth" aria-describedby="yearOfBirthHelp" asp-for="User.YearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" />
 		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
-	<div class="alert alert-light.padding-xs">
-		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
-		<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>
-	</div>
-</form>
+		<br />
+		<span asp-validation-for="User.YearOfBirth" class="text-danger"></span>
+		<div class="alert alert-light.padding-xs">
+			<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
+			<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>
+		</div>
+
+		@section Scripts {
+			<partial name="_ValidationScriptsPartial" />
+		}
+	</form>
 
 
