@@ -42,7 +42,7 @@
 				var profileImapgePath = $"~/images/{img}";
 				<tr>
 					<td data-id="td-ProfileImage">
-						<img class="imageThumbnailSm" asp-append-version="true" src=@Url.Content(profileImapgePath) />
+						<img class="imageThumbnailSm" asp-append-version="true" src="@Url.Content(profileImapgePath)" />
 					</td>
 					<td data-id="td-UserName">
 						@Html.DisplayFor(modelItem => item.Name)
