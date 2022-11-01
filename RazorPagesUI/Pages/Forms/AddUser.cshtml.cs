@@ -17,9 +17,7 @@ namespace RazorPagesUI.Pages.Forms
             _dataRepository = dataRepository;
         }
 
-        public void OnGet()
-        {
-        }
+        public void OnGet() { }
 
         public IActionResult OnPost()
         {

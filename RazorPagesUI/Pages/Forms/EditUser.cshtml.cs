@@ -2,12 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPageDemo.Services;
 using RazorPagesDemo.Models;
+using RazorPagesUI.Utils;
 
 namespace RazorPagesUI.Pages.Forms
 {
     public class EditUserModel : PageModel
     {
         private readonly IDataRepository _dataRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        [BindProperty]
+        public IFormFile ProfileImage { get; set; }
 
         [BindProperty]
         public User User { get; set; }
@@ -15,9 +20,10 @@ namespace RazorPagesUI.Pages.Forms
         [BindProperty]
         public User EditedUser { get; set; }
 
-        public EditUserModel(IDataRepository dataRepository)
+        public EditUserModel(IDataRepository dataRepository, IWebHostEnvironment webHostEnvironment)
         {
             _dataRepository = dataRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult OnGet(string id)
@@ -37,6 +43,13 @@ namespace RazorPagesUI.Pages.Forms
 
         public IActionResult OnPost(User user)
         {
+            if (ProfileImage is not null)
+            {
+                FilesManager.DeleteExistingProfileImage(_webHostEnvironment, user);
+
+                user.ProfileImage = FilesManager.ProcessUploadProfileImage(_webHostEnvironment, ProfileImage);
+            }
+
             User = _dataRepository.EditUser(user);
 
             return RedirectToPage("/Index");

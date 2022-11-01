@@ -2,12 +2,33 @@
 @model RazorPagesUI.Pages.Forms.EditUserModel
 @{
 	ViewData["Title"] = "Edit User";
+	var img = Model.User?.ProfileImage is not null ? $"profileImages/{Model.User?.ProfileImage}" : "noimage.jpg";
+	var profileImapgePath = $"~/images/{img}";
 }
 
 <h1>Edit User</h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 	<input hidden asp-for="User.Id" />
+	<input hidden asp-for="User.ProfileImage" />
+	<div class="form-group">
+		<img class="imageThumbnail .m-4 .p-4" asp-append-version="true" src="@profileImapgePath" />
+	</div>
+	<br />
+	<div class="form-group">
+		<div class="custom-file">
+			<input type="file" asp-for="ProfileImage" id="profileImage" class="custom-file-input form-control" />
+		</div>
+	</div>
+	<br />
+	<div class="form-group .padding-xs">
+		<label asp-for="User.Gender" for="selectGender"></label>
+		<div>
+			<select asp-for="User.Gender" id="selectGender" class="custom-select custom-select-lg mb-3"
+					asp-items="Html.GetEnumSelectList<Gender>()" data-id="select-Gender">
+			</select>
+		</div>
+	</div>
 	<div class="form-group .padding-xs">
 		<label asp-for="User.Name" for="inputUserName"></label>
 		<input class="form-control input-sm" asp-for="User.Name" id="inputUserName" placeholder="User Name" data-id="input-UserName" value="@Model.User.Name">
@@ -17,14 +38,6 @@
 		<label asp-for="User.YearOfBirth" for="inputYearOfBirth"></label>
 		<input class="form-control input-sm" asp-for="User.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
 		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
-	</div>
-	<div class="form-group .padding-xs">
-		<label asp-for="User.Gender" for="selectGender"></label>
-		<div>
-			<select asp-for="User.Gender" id="selectGender" class="custom-select custom-select-lg mb-3"
-					asp-items="Html.GetEnumSelectList<Gender>()" data-id="select-Gender">
-			</select>
-		</div>
 	</div>
 	<div class="alert alert-light.padding-xs">
 		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
