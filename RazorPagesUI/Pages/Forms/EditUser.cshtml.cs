@@ -45,10 +45,14 @@ namespace RazorPagesUI.Pages.Forms
         {
             if (ProfileImage is not null)
             {
-                FilesManager.DeleteExistingProfileImage(_webHostEnvironment, user);
+                var imagePath = FilesManager.ProcessUploadProfileImage(_webHostEnvironment, ProfileImage);
 
-                user.ProfileImage = FilesManager.ProcessUploadProfileImage(_webHostEnvironment, ProfileImage);
+                User.NewProfileImage = imagePath;
+
+                return Page();
             }
+
+            FilesManager.DeleteExistingProfileImage(_webHostEnvironment, user);
 
             User = _dataRepository.EditUser(user);
 

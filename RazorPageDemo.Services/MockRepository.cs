@@ -1,4 +1,5 @@
-﻿using RazorPagesDemo.Models;
+﻿using Microsoft.AspNetCore.Http;
+using RazorPagesDemo.Models;
 
 namespace RazorPageDemo.Services
 {
@@ -54,10 +55,28 @@ namespace RazorPageDemo.Services
                 user.Name = updatedUser.Name;
                 user.YearOfBirth = updatedUser.YearOfBirth;
                 user.Gender = updatedUser.Gender;
-                user.ProfileImage = updatedUser.ProfileImage;
+                user.ProfileImage = !string.IsNullOrEmpty(updatedUser.NewProfileImage) ? updatedUser.NewProfileImage : user.ProfileImage;
+                user.NewProfileImage = null;
             }
 
-            return null;
+            return user;
+        }
+
+        public User? EditUserProfileImage(User user, string image)
+        {
+            var userToUpdate = GetUser(user.Id);
+
+            if (userToUpdate is null)
+            {
+                return null;
+            }
+
+            if (user is not null && !string.IsNullOrEmpty(image))
+            {
+                userToUpdate.NewProfileImage = image;
+            }
+
+            return userToUpdate;
         }
 
         public IEnumerable<User> GetAllUsers()

@@ -2,22 +2,36 @@
 @model RazorPagesUI.Pages.Forms.EditUserModel
 @{
 	ViewData["Title"] = "Edit User";
-	var img = Model.User?.ProfileImage is not null ? $"profileImages/{Model.User?.ProfileImage}" : "noimage.jpg";
+
+	var img = string.Empty;
+
+	// Set new image as profile image if exists
+	if (!string.IsNullOrEmpty(Model.User.NewProfileImage))
+	{
+		img = $"profileImages/{Model.User?.NewProfileImage}";
+	}
+	else
+	{
+		// Set profile image or default noimage
+		img = Model.User?.ProfileImage is not null ? $"profileImages/{Model.User?.ProfileImage}" : "noimage.jpg";
+	}
+
 	var profileImapgePath = $"~/images/{img}";
 }
 
 <h1>Edit User</h1>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" id="editUserForm">
 	<input hidden asp-for="User.Id" />
-	<input hidden asp-for="User.ProfileImage" />
+	<input hidden id="profileImage" asp-for="User.ProfileImage" />
+	<input hidden asp-for="User.NewProfileImage" value="@Model.User?.NewProfileImage" />
 	<div class="form-group">
-		<img class="imageThumbnail .m-4 .p-4" asp-append-version="true" src="@profileImapgePath" />
+		<img class="imageThumbnail" asp-append-version="true" src="@profileImapgePath" />
 	</div>
 	<br />
 	<div class="form-group">
 		<div class="custom-file">
-			<input type="file" asp-for="ProfileImage" id="profileImage" class="custom-file-input form-control" />
+			<input type="file" asp-for="ProfileImage" class="custom-file-input form-control" />
 		</div>
 	</div>
 	<br />
@@ -43,5 +57,19 @@
 		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
 		<button type="submit" class="btn btn-primary" data-id="button-Update">Update</button>
 	</div>
-</form>
+
+	@section Scripts {
+		<script>
+			$(document).ready(function () {
+				$('.custom-file-input').on("change", function () {
+					$("#editUserForm").submit();
+					var fileName = $(this).val().split("\\").pop();
+					$('#profileImage').attr('value', fileName).load(function () {
+						this.width;
+					});
+				});
+			});
+		</script>
+	}
+	</form>
 

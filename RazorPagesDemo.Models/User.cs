@@ -19,6 +19,7 @@ namespace RazorPagesDemo.Models
         public Gender Gender { get; set; }
 
         public string? ProfileImage { get; set; }
+        public string? NewProfileImage { get; set; }
 
         public DateTime Created { get; init; } = DateTime.UtcNow;
     }
