@@ -21,3 +21,8 @@ body {
     height: 200px;
     width: auto;
 }
+
+.imageThumbnailSm {
+    height: 35px;
+    width: auto;
+}

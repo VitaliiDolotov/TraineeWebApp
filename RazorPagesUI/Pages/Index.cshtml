@@ -11,13 +11,15 @@
 <table class="table table-hover" data-id="table-Users">
 	<thead>
 		<tr>
-			<th colspan='4' style="text-align:center;font-size: large;">
+			<th colspan='5' style="text-align:center;font-size: large;">
 				USERS
 			</th>
 		</tr>
 		@if (Model.Users is not null && Model.Users.Any())
 		{
 			<tr style="text-align:center">
+				<th>
+				</th>
 				<th headers="par" scope="col">
 					User Name
 				</th>
@@ -36,7 +38,12 @@
 		@if (Model.Users is not null && Model.Users.Any())
 			@foreach (var item in Model.Users)
 			{
+				var img = item.ProfileImage is not null ? $"profileImages/{item.ProfileImage}" : "noimage.jpg";
+				var profileImapgePath = $"~/images/{img}";
 				<tr>
+					<td data-id="td-ProfileImage">
+						<img class="imageThumbnailSm" asp-append-version="true" src=@Url.Content(profileImapgePath) />
+					</td>
 					<td data-id="td-UserName">
 						@Html.DisplayFor(modelItem => item.Name)
 					</td>
