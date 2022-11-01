@@ -52,7 +52,10 @@ namespace RazorPagesUI.Pages.Forms
                 return Page();
             }
 
-            FilesManager.DeleteExistingProfileImage(_webHostEnvironment, user);
+            if (User.NewProfileImage is not null)
+            {
+                FilesManager.DeleteExistingProfileImage(_webHostEnvironment, user);
+            }
 
             User = _dataRepository.EditUser(user);
 
