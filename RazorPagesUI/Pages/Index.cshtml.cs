@@ -21,22 +21,22 @@ namespace RazorPagesUI.Pages
 
         public void OnGet()
         {
-            foreach (var user in _dataRepository.GetAllUsers().ToList())
-            {
-                if (user.Created <= DateTime.UtcNow.AddMinutes(-4))
-                {
-                    _dataRepository.DeleteUser(user);
-                    FilesManager.ClearProfileImagesFolder(_webHostEnvironment);
-                }
-            }
+            //foreach (var user in _dataRepository.GetAllUsers().ToList())
+            //{
+            //    if (user.Created <= DateTime.UtcNow.AddMinutes(-4))
+            //    {
+            //        _dataRepository.DeleteUser(user);
+            //        FilesManager.ClearProfileImagesFolder(_webHostEnvironment);
+            //    }
+            //}
 
-            foreach (var address in _dataRepository.GetAllAddresses().ToList())
-            {
-                if (address.Created <= DateTime.UtcNow.AddMinutes(-4))
-                {
-                    _dataRepository.DeleteAddress(address);
-                }
-            }
+            //foreach (var address in _dataRepository.GetAllAddresses().ToList())
+            //{
+            //    if (address.Created <= DateTime.UtcNow.AddMinutes(-4))
+            //    {
+            //        _dataRepository.DeleteAddress(address);
+            //    }
+            //}
 
             Users = _dataRepository.GetAllUsers();
             Adresses = _dataRepository.GetAllAddresses();
