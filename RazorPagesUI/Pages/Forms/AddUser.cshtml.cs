@@ -25,7 +25,8 @@ namespace RazorPagesUI.Pages.Forms
             {
                 return Page();
             }
-
+            
+            // Bug here. Not possible to create User with the combination of Name + YOB that were at some already existing entities 
             if (_dataRepository.GetAllUsers().Any(x => x.Name.Equals(User.Name)) &&
                 _dataRepository.GetAllUsers().Any(x => x.YearOfBirth.Equals(User.YearOfBirth)))
             {
