@@ -14,6 +14,9 @@ namespace RazorPagesDemo.Models.Validations
 			RuleFor(x => x.YearOfBirth)
 				.NotEmpty()
 				.InclusiveBetween(1900, 2005);
+
+			RuleFor(x => x.Gender)
+				.IsInEnum();
 		}
 	}
 }

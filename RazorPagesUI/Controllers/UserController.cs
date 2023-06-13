@@ -79,7 +79,9 @@ namespace RazorPagesUI.Controllers
 
 			_repository.EditUser(id, user);
 
-			return Ok();
+			var responseUser = _mapper.Map<User, UserDtoResponse>(user);
+
+			return Ok(responseUser);
 		}
 	}
 }
