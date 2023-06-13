@@ -13,7 +13,7 @@ namespace RazorPagesDemo.Models
 
         [Display(Name = "Year of Birth")]
         [Required(ErrorMessage = "Year of Birth is requried")]
-        [Range(1900, 2004, ErrorMessage = "Not valid Year of Birth is set")]
+        [Range(1900, 2005, ErrorMessage = "Not valid Year of Birth is set")]
         public int YearOfBirth { get; set; }
 
         public Gender Gender { get; set; }

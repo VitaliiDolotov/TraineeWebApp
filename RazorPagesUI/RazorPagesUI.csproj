@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RazorPageDemo.BL\RazorPageDemo.BL.csproj" />
     <ProjectReference Include="..\RazorPageDemo.Services\RazorPageDemo.Services.csproj" />
     <ProjectReference Include="..\RazorPagesDemo.Models\RazorPagesDemo.Models.csproj" />
   </ItemGroup>
