@@ -11,9 +11,10 @@ namespace RazorPageDemo.Services
 		{
 			_usersList = new List<User>()
 			{
-				new User() { Name = "Oleg", YearOfBirth = 1993, Created = DateTime.UtcNow, Gender = Gender.Male, ProfileImage = "oleg.jpg" },
-				new User() { Name = "Dasha", YearOfBirth = 1992, Created = DateTime.UtcNow, Gender = Gender.Female, ProfileImage = "dasha.jpg" },
-				new User() { Name = "Oksana", YearOfBirth = 1996, Created = DateTime.UtcNow, Gender = Gender.Female, ProfileImage = "oksana.jpg" }
+				new User() { Name = "Oleg", YearOfBirth = 1993, Created = DateTime.UtcNow.AddYears(-1), Gender = Gender.Male, ProfileImage = "oleg.jpg" },
+				new User() { Name = "Dasha", YearOfBirth = 1992, Created = DateTime.UtcNow.AddMonths(-1), Gender = Gender.Female, ProfileImage = "dasha.jpg" },
+				new User() { Name = "Oksana", YearOfBirth = 1996, Created = DateTime.UtcNow.AddDays(-6), Gender = Gender.Female, ProfileImage = "oksana.jpg" },
+				new User() { Name = "Vitalii", YearOfBirth = 1990, Created = DateTime.UtcNow.AddDays(-5), Gender = Gender.Male, ProfileImage = "vitalii.jpg" }
 			};
 
 			_addressesList = new List<Address>()
