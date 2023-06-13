@@ -70,5 +70,16 @@ namespace RazorPagesUI.Controllers
 
 			return Ok();
 		}
+
+		// PUT api/<UserController>/5
+		[HttpPut("{id}")]
+		public IActionResult Update(string id, UserDtoRequest userUpdate)
+		{
+			var user = _mapper.Map<UserDtoRequest, User>(userUpdate);
+
+			_repository.EditUser(id, user);
+
+			return Ok();
+		}
 	}
 }

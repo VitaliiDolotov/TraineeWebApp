@@ -7,7 +7,7 @@ namespace RazorPageDemo.Services
 		IEnumerable<User> GetAllUsers();
 		void AddUser(User user);
 		User? GetUser(string id);
-		User? EditUser(User user);
+		User? EditUser(string id, User user);
 		User? EditUserProfileImage(User user, string image);
 		void DeleteUser(User user);
 

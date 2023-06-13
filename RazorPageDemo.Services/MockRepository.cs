@@ -46,9 +46,9 @@ namespace RazorPageDemo.Services
 			}
 		}
 
-		public User? EditUser(User updatedUser)
+		public User? EditUser(string id, User updatedUser)
 		{
-			var user = GetUser(updatedUser.Id);
+			var user = GetUser(id);
 
 			if (user is not null)
 			{
