@@ -1,8 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.OpenApi.Models;
-using RazorPageDemo.BL.Base;
 using RazorPageDemo.BL.Mapper;
 using RazorPageDemo.BL.Services;
 using RazorPageDemo.Services;

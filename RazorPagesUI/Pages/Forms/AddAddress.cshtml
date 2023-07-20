@@ -8,32 +8,32 @@
 <form method="post">
 	<div class="form-group .padding-xs">
 		<label asp-for="Address.StreetAddress" for="inputStreetAddress"></label>
-		<input class="form-control" id="inputStreetAddress" type="text" asp-for="Address.StreetAddress" placeholder="Street Address" data-id="input-StreetAddress" />
-		<span asp-validation-for="Address.StreetAddress" class="text-danger" data-id="inputError-StreetAddress"></span>
+		<input class="form-control" id="inputStreetAddress" type="text" asp-for="Address.StreetAddress" placeholder="Street Address" data-testid="input-StreetAddress" />
+		<span asp-validation-for="Address.StreetAddress" class="text-danger" data-testid="inputError-StreetAddress"></span>
 	</div>
 	<br />
 	<div class="form-group .padding-xs">
 		<label asp-for="Address.City" for="inputCity"></label>
-		<input class="form-control" id="inputCity" type="text" asp-for="Address.City" placeholder="City" data-id="input-City" />
-		<span asp-validation-for="Address.City" class="text-danger" data-id="inputError-City"></span>
+		<input class="form-control" id="inputCity" type="text" asp-for="Address.City" placeholder="City" data-testid="input-City" />
+		<span asp-validation-for="Address.City" class="text-danger" data-testid="inputError-City"></span>
 	</div>
 	<br />
 	<div class="form-group .padding-xs">
 		<label asp-for="Address.State" for="inputState"></label>
-		<input class="form-control" id="inputState" type="text" asp-for="Address.State" placeholder="State" data-id="input-State" />
-		<span asp-validation-for="Address.State" class="text-danger" data-id="inputError-State"></span>
+		<input class="form-control" id="inputState" type="text" asp-for="Address.State" placeholder="State" data-testid="input-State" />
+		<span asp-validation-for="Address.State" class="text-danger" data-testid="inputError-State"></span>
 	</div>
 	<br />
 	<div class="form-group .padding-xs">
 		<label asp-for="Address.ZipCode" for="inputZipCode"></label>
-		<input class="form-control" id="inputZipCode" aria-describedby="zipCodeHelp" type="text" asp-for="Address.ZipCode" placeholder="Zip Code" data-id="input-ZipCode" />
-		<small id="zipCodeHelp" class="form-text text-muted" data-id="inputHint-ZipCode">US based Zip code</small>
+		<input class="form-control" id="inputZipCode" aria-describedby="zipCodeHelp" type="text" asp-for="Address.ZipCode" placeholder="Zip Code" data-testid="input-ZipCode" />
+		<small id="zipCodeHelp" class="form-text text-muted" data-testid="inputHint-ZipCode">US based Zip code</small>
 		<br />
-		<span asp-validation-for="Address.ZipCode" class="text-danger" data-id="inputError-ZipCode"></span>
+		<span asp-validation-for="Address.ZipCode" class="text-danger" data-testid="inputError-ZipCode"></span>
 	</div>
 	<div class="alert alert-light.padding-xs">
-		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
-		<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>
+		<a class="btn btn-secondary" asp-page="/Index" data-testid="button-Cancel">Cancel</a>
+		<button type="submit" class="btn btn-primary" data-testid="button-Create">Create</button>
 	</div>
 
 	@section Scripts {

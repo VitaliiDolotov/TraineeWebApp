@@ -11,26 +11,26 @@
 		<label asp-for="User.Gender" for="selectGender"></label>
 		<div>
 			<select asp-for="User.Gender" id="selectGender" class="custom-select custom-select-lg mb-3"
-					asp-items="Html.GetEnumSelectList<Gender>()" data-id="select-Gender">
+					asp-items="Html.GetEnumSelectList<Gender>()" data-testid="select-Gender">
 			</select>
 		</div>
 	</div>
 	<div class="form-group .padding-xs">
 		<label asp-for="User.Name" for="inputUserName"></label>
-		<input class="form-control" id="inputUserName" type="text" asp-for="User.Name" placeholder="User Name" data-id="input-UserName" />
-		<span asp-validation-for="User.Name" class="text-danger" data-id="inputError-UserName"></span>
+		<input class="form-control" id="inputUserName" type="text" asp-for="User.Name" placeholder="User Name" data-testid="input-UserName" />
+		<span asp-validation-for="User.Name" class="text-danger" data-testid="inputError-UserName"></span>
 	</div>
 	<br />
 	<div class="form-group .padding-xs">
 		<label asp-for="User.YearOfBirth" for="inputYearOfBirth"></label>
-		<input class="form-control" id="inputYearOfBirth" aria-describedby="yearOfBirthHelp" asp-for="User.YearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" />
-		<small id="yearOfBirthHelp" class="form-text text-muted" data-id="inputHint-YearOfBirth">Adults only</small>
+		<input class="form-control" id="inputYearOfBirth" aria-describedby="yearOfBirthHelp" asp-for="User.YearOfBirth" placeholder="Year of Birth" data-testid="input-YearOfBirth" />
+		<small id="yearOfBirthHelp" class="form-text text-muted" data-testid="inputHint-YearOfBirth">Adults only</small>
 		<br />
-		<span asp-validation-for="User.YearOfBirth" class="text-danger" data-id="inputError-YearOfBirth"></span>
+		<span asp-validation-for="User.YearOfBirth" class="text-danger" data-testid="inputError-YearOfBirth"></span>
 	</div>
 	<div class="alert alert-light.padding-xs">
-		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
-		<button type="submit" class="btn btn-primary" data-id="button-Create">Create</button>
+		<a class="btn btn-secondary" asp-page="/Index" data-testid="button-Cancel">Cancel</a>
+		<button type="submit" class="btn btn-primary" data-testid="button-Create">Create</button>
 	</div>
 	@section Scripts {
 		<partial name="_ValidationScriptsPartial" />

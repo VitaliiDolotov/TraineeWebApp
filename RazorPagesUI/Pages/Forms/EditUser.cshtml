@@ -39,23 +39,23 @@
 		<label asp-for="User.Gender" for="selectGender"></label>
 		<div>
 			<select asp-for="User.Gender" id="selectGender" class="custom-select custom-select-lg mb-3"
-					asp-items="Html.GetEnumSelectList<Gender>()" data-id="select-Gender">
+					asp-items="Html.GetEnumSelectList<Gender>()" data-testid="select-Gender">
 			</select>
 		</div>
 	</div>
 	<div class="form-group .padding-xs">
 		<label asp-for="User.Name" for="inputUserName"></label>
-		<input class="form-control input-sm" asp-for="User.Name" id="inputUserName" placeholder="User Name" data-id="input-UserName" value="@Model.User.Name">
+		<input class="form-control input-sm" asp-for="User.Name" id="inputUserName" placeholder="User Name" data-testid="input-UserName" value="@Model.User.Name">
 	</div>
 	<br />
 	<div class="form-group .padding-xs">
 		<label asp-for="User.YearOfBirth" for="inputYearOfBirth"></label>
-		<input class="form-control input-sm" asp-for="User.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-id="input-YearOfBirth" value="@Model.User.YearOfBirth">
+		<input class="form-control input-sm" asp-for="User.YearOfBirth" aria-describedby="yearOfBirthHelp" id="inputYearOfBirth" placeholder="Year of Birth" data-testid="input-YearOfBirth" value="@Model.User.YearOfBirth">
 		<small id="yearOfBirthHelp" class="form-text text-muted">Adults only</small>
 	</div>
 	<div class="alert alert-light.padding-xs">
-		<a class="btn btn-secondary" asp-page="/Index" data-id="button-Cancel">Cancel</a>
-		<button type="submit" class="btn btn-primary" data-id="button-Update">Update</button>
+		<a class="btn btn-secondary" asp-page="/Index" data-testid="button-Cancel">Cancel</a>
+		<button type="submit" class="btn btn-primary" data-testid="button-Update">Update</button>
 	</div>
 
 	@section Scripts {
