@@ -13,6 +13,7 @@ namespace RazorPageDemo.BL.Mapper
 			var config = new MapperConfiguration(cfg =>
 			{
 				cfg.AddProfile<UserProfile>();
+				cfg.AddProfile<StoryProfile>();
 			});
 
 			this._mapper = config.CreateMapper();
@@ -30,6 +31,13 @@ namespace RazorPageDemo.BL.Mapper
 			where TDestination : class
 		{
 			return this._mapper.Map(source, destination);
+		}
+
+		public TDestination Map<TSource, TDestination>(TSource source, Action<IMappingOperationOptions<TSource, TDestination>> opts)
+			where TSource : class
+			where TDestination : class
+		{
+			return _mapper.Map(source, default(TDestination), opts);
 		}
 	}
 }

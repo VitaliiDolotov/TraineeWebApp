@@ -1,4 +1,5 @@
-﻿using RazorPagesDemo.Models;
+﻿using RazorPageDemo.Services.Models;
+using RazorPagesDemo.Models;
 
 namespace RazorPageDemo.Services
 {
@@ -15,5 +16,8 @@ namespace RazorPageDemo.Services
 		void AddAddress(Address address);
 		Address? GetAddress(string id);
 		void DeleteAddress(Address address);
+
+		IEnumerable<Story> GetAllStories();
+		Story? GetStoryById(int id);
 	}
 }
