@@ -12,21 +12,21 @@
         @if (!ViewData.ModelState.IsValid)
         {
             <div asp-validation-summary="ModelOnly"
-                 class="alert alert-danger py-2 mb-3 validation-summary-no-bullets">
+                 class="alert alert-danger py-2 mb-3 validation-summary-no-bullets" data-testid="form-error-msg">
             </div>
         }
 
         <form method="post">
-            <div class="mb-3">
+            <div class="mb-3" data-testid="username-field">
                 <label asp-for="Username" class="form-label"></label>
-                <input class="form-control" asp-for="Username" autocomplete="username" />
-                <span asp-validation-for="Username" class="text-danger small"></span>
+                <input class="form-control" data-testid="input" asp-for="Username" autocomplete="username" />
+                <span asp-validation-for="Username" class="text-danger small" data-testid="error-msg"></span>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3"  data-testid="password-field">
                 <label asp-for="Password" class="form-label"></label>
-                <input class="form-control" asp-for="Password" type="password" autocomplete="current-password" />
-                <span asp-validation-for="Password" class="text-danger small"></span>
+                <input class="form-control" data-testid="input" asp-for="Password" type="password" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger small" data-testid="error-msg"></span>
             </div>
 
             <button type="submit" class="btn btn-primary w-100">Sign in</button>

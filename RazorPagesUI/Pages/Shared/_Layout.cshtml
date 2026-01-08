@@ -20,7 +20,7 @@
             string.Equals(currentPath, pagePath, StringComparison.OrdinalIgnoreCase);
     }
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm" data-testid="header">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" asp-area="" asp-page="@AppRoutes.IndexPage">
                 <span class="fw-bold">Trainees website</span>
@@ -38,21 +38,21 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <!-- LEFT -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item" data-testid="home-button">
                         <a class="nav-link @(IsActive(AppRoutes.IndexPage) ? "active fw-semibold" : "")"
                            asp-area="" asp-page="@AppRoutes.IndexPage">
                             Home
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item" data-testid="addUser-button">
                         <a class="nav-link @(IsActive(AppRoutes.AddUser) ? "active fw-semibold" : "")"
                            asp-area="" asp-page="@AppRoutes.AddUser">
                             Add User
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item" data-testid="addAddress-button">
                         <a class="nav-link @(IsActive(AppRoutes.AddAddress) ? "active fw-semibold" : "")"
                            asp-area="" asp-page="@AppRoutes.AddAddress">
                             Add Address
@@ -61,7 +61,7 @@
                 </ul>
 
                 <!-- RIGHT -->
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2" data-testid="logout-button">
                     <a class="btn btn-sm btn-outline-danger"
                        asp-page="@AppRoutes.LogoutPage"
                        asp-route-returnUrl="@(currentPath + Context.Request.QueryString)"
@@ -78,7 +78,7 @@
     @RenderBody()
 </main>
 
-<footer class="border-top bg-white">
+<footer class="border-top bg-white" data-testid="footer">
     <div class="container py-3 d-flex justify-content-between align-items-center">
         <div class="text-muted small">
             &copy; @DateTime.UtcNow.Year - Techstack

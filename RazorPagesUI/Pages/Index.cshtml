@@ -19,12 +19,12 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <div>
                         <h2 class="h5 mb-0">Users</h2>
-                        <div class="text-muted small">
+                        <div class="text-muted small" data-testid="user-total">
                             @(Model.Users?.Any() == true ? $"Total: {Model.Users.Count()}" : "No users yet")
                         </div>
                     </div>
 
-                    <a asp-page="@AppRoutes.AddUser" class="btn btn-primary">
+                    <a asp-page="@AppRoutes.AddUser" class="btn btn-primary" data-testid="addUser-button">
                         + Add user
                     </a>
                 </div>
@@ -109,12 +109,12 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <div>
                         <h2 class="h5 mb-0">Addresses</h2>
-                        <div class="text-muted small">
+                        <div class="text-muted small" data-testid="address-total">
                             @(Model.Adresses?.Any() == true ? $"Total: {Model.Adresses.Count()}" : "No addresses yet")
                         </div>
                     </div>
 
-                    <a asp-page="@AppRoutes.AddAddress" class="btn btn-primary">
+                    <a asp-page="@AppRoutes.AddAddress" class="btn btn-primary" data-testid="addAddress-button">
                         + Add address
                     </a>
                 </div>
