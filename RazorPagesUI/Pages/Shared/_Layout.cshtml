@@ -1,54 +1,107 @@
-﻿<!DOCTYPE html>
+﻿@using RazorPagesUI.Infrastructure.Routing
+<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>TS Trainee course</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/RazorPagesUI.styles.css" asp-append-version="true" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "TS Trainee course")</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RazorPagesUI.styles.css" asp-append-version="true" />
 </head>
-<body>
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container">
-				<a class="navbar-brand" asp-area="" asp-page="/Index">Trainees website</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/Forms/AddUser">Add User</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/Forms/AddAddress">Add Address</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="container">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
 
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2025 - Techstack
-		</div>
-	</footer>
+<body class="bg-light d-flex flex-column min-vh-100">
+<header>
+    @{
+        var currentPath = Context.Request.Path.Value ?? "";
 
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
+        bool IsActive(string pagePath) =>
+            string.Equals(currentPath, pagePath, StringComparison.OrdinalIgnoreCase);
+    }
 
-	@await RenderSectionAsync("Scripts", required: false)
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" asp-area="" asp-page="@AppRoutes.IndexPage">
+                <span class="fw-bold">Trainees website</span>
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNav"
+                    aria-controls="mainNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <!-- LEFT -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link @(IsActive(AppRoutes.IndexPage) ? "active fw-semibold" : "")"
+                           asp-area="" asp-page="@AppRoutes.IndexPage">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link @(IsActive(AppRoutes.AddUser) ? "active fw-semibold" : "")"
+                           asp-area="" asp-page="@AppRoutes.AddUser">
+                            Add User
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link @(IsActive(AppRoutes.AddAddress) ? "active fw-semibold" : "")"
+                           asp-area="" asp-page="@AppRoutes.AddAddress">
+                            Add Address
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- RIGHT -->
+                <div class="d-flex align-items-center gap-2">
+                    <a class="btn btn-sm btn-outline-danger"
+                       asp-page="@AppRoutes.LogoutPage"
+                       asp-route-returnUrl="@(currentPath + Context.Request.QueryString)"
+                       id="logoutLink">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container flex-grow-1 py-4">
+    @RenderBody()
+</main>
+
+<footer class="border-top bg-white">
+    <div class="container py-3 d-flex justify-content-between align-items-center">
+        <div class="text-muted small">
+            &copy; @DateTime.UtcNow.Year - Techstack
+        </div>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutLink = document.getElementById("logoutLink");
+    if (!logoutLink) return;
+
+    logoutLink.addEventListener("click", function (e) {
+        const ok = confirm("Are you sure you want to log out?");
+        if (!ok) e.preventDefault();
+    });
+});
+</script>
 </body>
 </html>

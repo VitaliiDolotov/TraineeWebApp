@@ -1,45 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPageDemo.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPagesDemo.Models;
-using RazorPagesUI.Utils;
+using RazorPagesDemo.Models.DTO;
+using RazorPagesUI.Api.Clients;
+using RazorPagesUI.Infrastructure.Auth;
+using RazorPagesUI.Infrastructure.Routing;
 
-namespace RazorPagesUI.Pages
+namespace RazorPagesUI.Pages;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    private readonly UserApi _userApi;
+    private readonly AddressApi _addressApi;
+
+    public IEnumerable<UserDtoResponse> Users { get; private set; } = Array.Empty<UserDtoResponse>();
+    public IEnumerable<Address> Adresses { get; private set; } = Array.Empty<Address>();
+
+    public IndexModel(UserApi userApi, AddressApi addressApi)
     {
-        private readonly IDataRepository _dataRepository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        _userApi = userApi;
+        _addressApi = addressApi;
+    }
 
-        public IEnumerable<Address> Adresses { get; set; }
-        public IEnumerable<User> Users { get; set; }
+    public async Task<IActionResult> OnGetAsync()
+    {
+        var token = this.GetAccessToken();
+        var returnUrl = Url.Page(AppRoutes.IndexPage)!;
 
-        public IndexModel(IDataRepository dataRepository, IWebHostEnvironment webHostEnvironment)
-        {
-            _dataRepository = dataRepository;
-            _webHostEnvironment = webHostEnvironment;
-        }
+        var (addresses, addrAction) = await _addressApi.GetAllAsync(
+            page: this,
+            token: token,
+            returnUrl: returnUrl);
 
-        public void OnGet()
-        {
-            //foreach (var user in _dataRepository.GetAllUsers().ToList())
-            //{
-            //    if (user.Created <= DateTime.UtcNow.AddMinutes(-4))
-            //    {
-            //        _dataRepository.DeleteUser(user);
-            //        FilesManager.ClearProfileImagesFolder(_webHostEnvironment);
-            //    }
-            //}
+        if (addrAction is not null) return addrAction;
+        Adresses = addresses ?? Array.Empty<Address>();
 
-            //foreach (var address in _dataRepository.GetAllAddresses().ToList())
-            //{
-            //    if (address.Created <= DateTime.UtcNow.AddMinutes(-4))
-            //    {
-            //        _dataRepository.DeleteAddress(address);
-            //    }
-            //}
+        var (users, userAction) = await _userApi.GetAllAsync(
+            page: this,
+            token: token,
+            returnUrl: returnUrl);
 
-            Users = _dataRepository.GetAllUsers();
-            Adresses = _dataRepository.GetAllAddresses();
-        }
+        if (userAction is not null) return userAction;
+        Users = users ?? Array.Empty<UserDtoResponse>();
+
+        return Page();
     }
 }

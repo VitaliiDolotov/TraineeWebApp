@@ -1,115 +1,177 @@
 ﻿@page
+@using RazorPagesUI.Infrastructure.Routing
 @model IndexModel
 @{
-	ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-	<h1 class="display-4">Users and Addresses</h1>
+<div class="text-center mb-4">
+    <h1 class="display-5 fw-semibold mb-1">Users and Addresses</h1>
+    <div class="text-muted">Manage users and their addresses</div>
 </div>
 
-<table class="table table-hover" data-testid="table-Users">
-	<thead>
-		<tr>
-			<th colspan='5' style="text-align:center;font-size: large;">
-				USERS
-			</th>
-		</tr>
-		@if (Model.Users is not null && Model.Users.Any())
-		{
-			<tr style="text-align:center">
-				<th>
-				</th>
-				<th headers="par" scope="col">
-					User Name
-				</th>
-				<th headers="par" scope="col">
-					Year of Birth
-				</th>
-				<th headers="par" scope="col">
-					Gender
-				</th>
-				<th>
-				</th>
-			</tr>
-		}
-	</thead>
-	<tbody>
-		@if (Model.Users is not null && Model.Users.Any())
-			@foreach (var item in Model.Users)
-			{
-				var img = item.ProfileImage is not null ? $"profileImages/{item.ProfileImage}" : "noimage.jpg";
-				var profileImapgePath = $"~/images/{img}";
-				<tr>
-					<td data-testid="td-ProfileImage">
-						<img class="imageThumbnailSm" asp-append-version="true" src="@Url.Content(profileImapgePath)" />
-					</td>
-					<td data-testid="td-UserName">
-						@Html.DisplayFor(modelItem => item.Name)
-					</td>
-					<td data-testid="td-YearOfBirth">
-						@Html.DisplayFor(modelItem => item.YearOfBirth)
-					</td>
-					<td data-testid="td-Gender">
-						@Html.DisplayFor(modelItem => item.Gender)
-					</td>
-					<td style="text-align:right">
-						<a asp-page="/Forms/EditUser" class="btn btn-primary m-1" asp-route-id="@item.Id" data-testid="button-Edit">Edit</a>
-						<a asp-page="/Forms/DeleteUser" class="btn btn-danger m-1" asp-route-id="@item.Id" data-testid="button-Delete">Delete</a>
-					</td>
-				</tr>
-			}
-	</tbody>
-</table>
+<div class="row g-4">
 
-<table class="table table-hover" data-testid="table-Addresses">
-	<thead>
-		<tr>
-			<th colspan='5' style="text-align:center;font-size: large;">
-				ADDRESSES
-			</th>
-		</tr>
-		@if (Model.Adresses is not null && Model.Adresses.Any())
-		{
-			<tr>
-				<th scope="col">
-					Street Address
-				</th>
-				<th scope="col">
-					City
-				</th>
-				<th scope="col">
-					State
-				</th>
-				<th scope="col">
-					Zip Code
-				</th>
-				<th>
-				</th>
-			</tr>
-		}
-	</thead>
-	<tbody>
-		@if (Model.Adresses is not null && Model.Adresses.Any())
-			@foreach (var item in Model.Adresses)
-			{
-				<tr>
-					<td data-testid="td-StreetAddress">
-						@Html.DisplayFor(modelItem => item.StreetAddress)
-					</td>
-					<td data-testid="td-City">
-						@Html.DisplayFor(modelItem => item.City)
-					</td>
-					<td data-testid="td-State">
-						@Html.DisplayFor(modelItem => item.State)
-					</td>
-					<td data-testid="td-ZipCode">
-						@Html.DisplayFor(modelItem => item.ZipCode)
-					</td>
-					<td style="text-align:right">
-						<a asp-page="/Forms/DeleteAddress" class="btn btn-danger m-1" asp-route-id="@item.Id" data-testid="button-Delete">Delete</a>
-					</td>
-				</tr>
-			}
-	</tbody>
-</table>
+    <!-- USERS -->
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h2 class="h5 mb-0">Users</h2>
+                        <div class="text-muted small">
+                            @(Model.Users?.Any() == true ? $"Total: {Model.Users.Count()}" : "No users yet")
+                        </div>
+                    </div>
+
+                    <a asp-page="@AppRoutes.AddUser" class="btn btn-primary">
+                        + Add user
+                    </a>
+                </div>
+
+                @if (Model.Users is null || !Model.Users.Any())
+                {
+                    <div class="alert alert-light border mb-0">
+                        <div class="fw-semibold">No users found</div>
+                        <div class="text-muted small">Click “Add user” to create the first one.</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" data-testid="table-Users">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:72px;"></th>
+                                    <th scope="col">User Name</th>
+                                    <th scope="col" style="width:180px;">Year of Birth</th>
+                                    <th scope="col" style="width:160px;">Gender</th>
+                                    <th scope="col" style="width:220px;" class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.Users)
+                            {
+                                var img = item.ProfileImage is not null ? $"profileImages/{item.ProfileImage}" : "noimage.jpg";
+                                var profileImagePath = Url.Content($"~/images/{img}");
+
+                                <tr>
+                                    <td class="text-center" data-testid="td-ProfileImage">
+                                        <img class="imageThumbnailSm rounded-circle border"
+                                             asp-append-version="true"
+                                             src="@profileImagePath"
+                                             alt="profile" />
+                                    </td>
+
+                                    <td class="fw-semibold" data-testid="td-UserName">
+                                        @item.Name
+                                    </td>
+
+                                    <td data-testid="td-YearOfBirth">
+                                        @item.YearOfBirth
+                                    </td>
+
+                                    <td data-testid="td-Gender">
+                                        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle">
+                                            @item.Gender
+                                        </span>
+                                    </td>
+
+                                    <td class="text-end">
+                                        <a asp-page="@AppRoutes.EditUser"
+                                           class="btn btn-sm btn-outline-primary me-2"
+                                           asp-route-id="@item.Id"
+                                           data-testid="button-Edit">
+                                            Edit
+                                        </a>
+
+                                        <a asp-page="@AppRoutes.DeleteUser"
+                                           class="btn btn-sm btn-outline-danger"
+                                           asp-route-id="@item.Id"
+                                           data-testid="button-Delete">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ADDRESSES -->
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h2 class="h5 mb-0">Addresses</h2>
+                        <div class="text-muted small">
+                            @(Model.Adresses?.Any() == true ? $"Total: {Model.Adresses.Count()}" : "No addresses yet")
+                        </div>
+                    </div>
+
+                    <a asp-page="@AppRoutes.AddAddress" class="btn btn-primary">
+                        + Add address
+                    </a>
+                </div>
+
+                @if (Model.Adresses is null || !Model.Adresses.Any())
+                {
+                    <div class="alert alert-light border mb-0">
+                        <div class="fw-semibold">No addresses found</div>
+                        <div class="text-muted small">Click “Add address” to create the first one.</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" data-testid="table-Addresses">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Street Address</th>
+                                    <th scope="col" style="width:220px;">City</th>
+                                    <th scope="col" style="width:120px;">State</th>
+                                    <th scope="col" style="width:140px;">Zip Code</th>
+                                    <th scope="col" style="width:160px;" class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.Adresses)
+                            {
+                                <tr>
+                                    <td data-testid="td-StreetAddress" class="fw-semibold">
+                                        @item.StreetAddress
+                                    </td>
+                                    <td data-testid="td-City">
+                                        @item.City
+                                    </td>
+                                    <td data-testid="td-State">
+                                        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle">
+                                            @item.State
+                                        </span>
+                                    </td>
+                                    <td data-testid="td-ZipCode">
+                                        @item.ZipCode
+                                    </td>
+                                    <td class="text-end">
+                                        <a asp-page="@AppRoutes.DeleteAddress"
+                                           class="btn btn-sm btn-outline-danger"
+                                           asp-route-id="@item.Id"
+                                           data-testid="button-Delete">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
