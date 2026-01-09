@@ -1,0 +1,134 @@
+﻿@page "{id}"
+@model EditUserModel
+
+@{
+    ViewData["Title"] = "Edit User";
+
+    var img = string.Empty;
+
+    // Set new image as profile image if exists
+    if (!string.IsNullOrEmpty(Model.User.NewProfileImage))
+    {
+        img = "profileImages/" + Model.User.NewProfileImage;
+    }
+    else
+    {
+        // Set profile image or default noimage
+        img = !string.IsNullOrWhiteSpace(Model.User?.ProfileImage)
+            ? "profileImages/" + Model.User.ProfileImage
+            : "noimage.jpg";
+    }
+
+    var profileImagePath = Url.Content("~/images/" + img);
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+                        <h1 class="h3 mb-1">Edit User</h1>
+                        <div class="text-muted">Update user details</div>
+                    </div>
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-warning">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <div>@error.ErrorMessage</div>
+                            }
+                        </div>
+                    }
+
+                    <form method="post" enctype="multipart/form-data" id="editUserForm">
+                        <input hidden asp-for="User.Id" />
+                        <input hidden id="profileImage" asp-for="User.ProfileImage" />
+                        <input hidden asp-for="User.NewProfileImage" value="@Model.User?.NewProfileImage" />
+
+                        <div class="text-center mb-4">
+                            <img src="@profileImagePath"
+                                 class="rounded-circle shadow"
+                                 style="width:120px;height:120px;object-fit:cover;"
+                                 alt="User avatar" />
+
+                            <div class="mt-3">
+                                <label class="form-label mb-2">Profile image</label>
+                                <input type="file"
+                                       asp-for="ProfileImage"
+                                       class="form-control custom-file-input"
+                                       aria-label="Upload profile image" />
+                                <div class="form-text">Selecting a file will auto-submit to preview.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="User.Gender" class="form-label" for="selectGender"></label>
+                            <select asp-for="User.Gender"
+                                    id="selectGender"
+                                    class="form-select"
+                                    asp-items="Html.GetEnumSelectList<Gender>()"
+                                    data-testid="select-Gender">
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="User.Name" class="form-label" for="inputUserName"></label>
+                            <input class="form-control"
+                                   asp-for="User.Name"
+                                   id="inputUserName"
+                                   placeholder="User Name"
+                                   data-testid="input-UserName" />
+                            <span asp-validation-for="User.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="User.YearOfBirth" class="form-label" for="inputYearOfBirth"></label>
+                            <input class="form-control"
+                                   asp-for="User.YearOfBirth"
+                                   aria-describedby="yearOfBirthHelp"
+                                   id="inputYearOfBirth"
+                                   placeholder="Year of Birth"
+                                   data-testid="input-YearOfBirth" />
+                            <div id="yearOfBirthHelp" class="form-text text-muted">Adults only</div>
+                            <span asp-validation-for="User.YearOfBirth" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end mt-4">
+                            <a class="btn btn-outline-secondary"
+                               asp-page="/Index"
+                               data-testid="button-Cancel">
+                                Cancel
+                            </a>
+                            <button type="submit"
+                                    class="btn btn-primary px-4"
+                                    data-testid="button-Update">
+                                Update
+                            </button>
+                        </div>
+
+                        @section Scripts {
+                            <script>
+                                $(document).ready(function () {
+                                    $('.custom-file-input').on("change", function () {
+                                        $("#editUserForm").submit();
+                                        var fileName = $(this).val().split("\\").pop();
+                                        $('#profileImage').attr('value', fileName).load(function () {
+                                            this.width;
+                                        });
+                                    });
+                                });
+                            </script>
+                            <partial name="_ValidationScriptsPartial" />
+                        }
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

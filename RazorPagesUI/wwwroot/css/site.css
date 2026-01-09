@@ -26,3 +26,12 @@ body {
     height: 35px;
     width: auto;
 }
+
+.validation-summary-no-bullets ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.validation-summary-no-bullets li {
+    margin: 0;
+}

@@ -4,7 +4,7 @@ namespace RazorPagesDemo.Models
 {
     public class User
     {
-        public string Id { get; init; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [Display(Name = "User Name")]
         [Required(ErrorMessage = "Name is requried")]
