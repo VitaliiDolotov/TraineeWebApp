@@ -30,7 +30,7 @@ namespace RazorPagesUI.Api.Controllers
 			return responseUsers;
 		}
 
-		// GET api/<UserController>/5
+		// GET api/<UserController>/{id}
 		[Authorize]
 		[HttpGet("{id}")]
 		public IActionResult Get(string id)
@@ -59,7 +59,7 @@ namespace RazorPagesUI.Api.Controllers
 			return Ok(responseUser);
 		}
 
-		// DELETE api/<UserController>/5
+		// DELETE api/<UserController>/{id}
 		[Authorize(Roles = "Admin")]
 		[HttpDelete("{id}")]
 		public IActionResult Delete(string id)

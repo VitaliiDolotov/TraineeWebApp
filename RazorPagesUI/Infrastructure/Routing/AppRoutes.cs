@@ -5,8 +5,8 @@ public static class AppRoutes
     public const string IndexPage = "/Index";
     private const string FormUrl = "/Forms";
     
-    public const string LoginPage = "Login";
-    public const string LogoutPage = "Logout";
+    public const string LoginPage = "/Login";
+    public const string LogoutPage = "/Logout";
     
     private const string User = $"{FormUrl}/User";
     public const string AddUser = $"{User}/AddUser";

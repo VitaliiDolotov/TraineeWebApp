@@ -10,6 +10,8 @@ using RazorPageDemo.Services;
 using RazorPagesDemo.Models;
 using RazorPagesUI.Api.Clients;
 using RazorPagesUI.Api.Controllers.Auth;
+using RazorPagesUI.Infrastructure.Auth;
+using RazorPagesUI.Infrastructure.Routing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,64 +19,68 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddHttpContextAccessor();
+
+// HttpClient for internal API calls
 builder.Services.AddHttpClient("Api", (sp, client) =>
 {
-	var http = sp.GetRequiredService<IHttpContextAccessor>().HttpContext!;
-	client.BaseAddress = new Uri($"{http.Request.Scheme}://{http.Request.Host}");
+    var http = sp.GetRequiredService<IHttpContextAccessor>().HttpContext!;
+    client.BaseAddress = new Uri($"{http.Request.Scheme}://{http.Request.Host}");
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-	{
-		Name = "Authorization",
-		Type = SecuritySchemeType.Http,
-		Scheme = "bearer",
-		BearerFormat = "JWT",
-		In = ParameterLocation.Header,
-		Description = "Input: Bearer <token>"
-	});
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Input: Bearer <token>"
+    });
 
-	c.AddSecurityRequirement(new OpenApiSecurityRequirement
-	{
-		{
-			new OpenApiSecurityScheme
-			{
-				Reference = new OpenApiReference
-				{
-					Type = ReferenceType.SecurityScheme,
-					Id = "Bearer"
-				}
-			},
-			Array.Empty<string>()
-		}
-	});
-	
-	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Trainees website API", Version = "v1" });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Trainees website API", Version = "v1" });
 });
 
-// Validation configuration
+// Validation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<IModelsMarker>();
 
+// API auth (JWT)
 builder.Services
-	.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-	.AddJwtBearer(options =>
-	{
-		options.TokenValidationParameters = new TokenValidationParameters
-		{
-			ValidateIssuer = true,
-			ValidateAudience = true,
-			ValidateLifetime = true,
-			ValidateIssuerSigningKey = true,
-			ValidIssuer = JwtTokenFactory.Issuer,
-			ValidAudience = JwtTokenFactory.Audience,
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenFactory.Key)),
-			ClockSkew = TimeSpan.Zero
-		};
-	});
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = JwtTokenFactory.Issuer,
+            ValidAudience = JwtTokenFactory.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenFactory.Key)),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 builder.Services.AddAuthorization();
 
@@ -88,24 +94,18 @@ builder.Services.AddScoped<AuthApi>();
 
 #endregion
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-	app.UseExceptionHandler("/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
 app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-	c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Documentation");
-});
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Documentation"); });
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -114,36 +114,30 @@ app.UseRouting();
 
 app.Use(async (context, next) =>
 {
-	var path = context.Request.Path.Value?.ToLower();
+    var path = context.Request.Path;
 
-	if (path is not null &&
-	    (path.StartsWith("/login")
-	     || path.StartsWith("/logout")
-	     || path.StartsWith("/api")
-	     || path.StartsWith("/swagger")
-	     || path.StartsWith("/css")
-	     || path.StartsWith("/js")
-	     || path.StartsWith("/lib")
-	     || path.StartsWith("/images")))
-	{
-		await next();
-		return;
-	}
+    if (path.Equals(AppRoutes.LoginPage, StringComparison.OrdinalIgnoreCase) ||
+        path.Equals(AppRoutes.LogoutPage, StringComparison.OrdinalIgnoreCase) || path.StartsWithSegments("/api") ||
+        path.StartsWithSegments("/swagger"))
+    {
+        await next();
+        return;
+    }
 
-	if (!context.Request.Cookies.ContainsKey("access_token"))
-	{
-		context.Response.Redirect($"/Login?returnUrl={Uri.EscapeDataString(context.Request.Path)}");
-		return;
-	}
+    if (!context.Request.Cookies.ContainsKey(AuthConstants.AccessTokenCookie))
+    {
+        var returnUrl = context.Request.Path + context.Request.QueryString;
+        context.Response.Redirect($"{AppRoutes.LoginPage}?returnUrl={Uri.EscapeDataString(returnUrl)}");
+        return;
+    }
 
-	await next();
+    await next();
 });
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
 app.MapControllers();
 
 app.Run();

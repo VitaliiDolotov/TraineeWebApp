@@ -48,7 +48,6 @@ public class DeleteAddressModel : PageModel
 
         if (result is not null) return result;
 
-        // если forbidden/error — показываем страницу с адресом снова
         var (addr, _) = await _addressApi.GetByIdAsync(
             page: this,
             token: token,
